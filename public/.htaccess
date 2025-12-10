@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # যদি আপনার প্রজেক্টটি কোনো সাব-ফোল্ডারে থাকে (যেমন: yourdomain.com/subfolder/)
+    # তাহলে নিচের লাইনটি আনকমেন্ট করুন এবং সঠিক পাথ দিন।
+    # RewriteBase /subfolder/public/
+    
+    # সকল রিকোয়েস্টকে public ফোল্ডারে পাঠানো (যদি আপনার Document Root public_html হয়)
+    # RewriteRule ^(.*)$ public/$1 [L]
+
+    # HTTP Authorization হেডার হ্যান্ডেল করা
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # শেষে থাকা স্ল্যাশ (/) রিমুভ করা
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # সকল রিকোয়েস্টকে index.php তে পাঠানো
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
