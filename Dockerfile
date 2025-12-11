@@ -18,8 +18,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy example env and generate app key (optional if using Render Environment variables)
-RUN cp .env.example .env
+# Generate Laravel key (optional, Render will use env)
 RUN php artisan key:generate
 
 # Expose port 10000
