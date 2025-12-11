@@ -16,9 +16,9 @@ WORKDIR /var/www
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
-# Generate Laravel key (optional, Render will use env)
+# Generate Laravel key
 RUN php artisan key:generate
 
 # Expose port 10000
